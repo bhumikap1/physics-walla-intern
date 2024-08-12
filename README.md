@@ -164,7 +164,7 @@ Tkinter (for file dialog operations)
 
 Installation
 Clone the Repository:
-git clone https://github.com/yourusername/your-repo-name.git
+git clone https: https://github.com/bhumikap1/physics-walla-intern.git
 cd your-repo-name
 
 Install Dependencies:

@@ -130,9 +130,7 @@ image_to_text/
    - **JPG to Word**: Convert a JPG image to a Word document.
    - **PDF to Word**: Convert a PDF file to a Word document.
    - **JPG to PDF**: Convert a JPG image to a PDF file.
-
-3. **Search Bar**: Use the search bar in the navigation menu to search within the application.
-
+     
 ## Contributing
 
 If you'd like to contribute to this project, please fork the repository and submit a pull request with your improvements.

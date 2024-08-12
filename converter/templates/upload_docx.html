@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCX to Text</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            text-align: center; /* Center all content in the container */
+        }
+        .form-control-file {
+            display: inline-block;
+            width: auto;
+        }
+        .btn {
+            margin: 5px;
+        }
+        .navbar-nav {
+            margin-left: auto; /* Align navbar items to the left */
+            margin-right: auto; /* Align navbar items to the right */
+        }
+        .navbar-nav .nav-item {
+            margin: 0 10px; /* Space out the navbar items */
+        }
+        pre {
+            text-align: left; /* Ensure text is not centered */
+            display: inline-block;
+            white-space: pre-wrap; /* Allow text to wrap */
+            word-wrap: break-word; /* Break long words */
+        }
+        .navbar-brand {
+            pointer-events: auto; /* Make "ImageToText" text clickable */
+            cursor: pointer; /* Change cursor to indicate clickable text */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">ImageToText</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'upload_file' %}">JPEG/PNG/JPG to Text</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'upload_pdf' %}">PDF to Text</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'upload_docx' %}">DOCX to Text</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Upload a DOCX File to Convert to Text</h2>
+        <form method="post" enctype="multipart/form-data" class="mb-4">
+            {% csrf_token %}
+            <input type="file" name="file" class="form-control-file mx-auto" accept=".docx, .doc" />
+            <button type="submit" class="btn btn-primary mt-2">Upload</button>
+        </form>
+
+        {% if extracted_text %}
+            <hr>
+            <h3>Extracted Text:</h3>
+            <pre>{{ extracted_text }}</pre>
+
+            <!-- Copy Button -->
+            <button id="copyText" class="btn btn-secondary mt-2">Copy Text</button>
+
+            <!-- Download Buttons -->
+            <div class="mt-3">
+                <a href="{% url 'download_text' %}?format=text&text={{ extracted_text|urlencode }}" class="btn btn-success">Download as Text</a>
+                <a href="{% url 'download_text' %}?format=pdf&text={{ extracted_text|urlencode }}" class="btn btn-info">Download as PDF</a>
+                <a href="{% url 'download_text' %}?format=docx&text={{ extracted_text|urlencode }}" class="btn btn-warning">Download as DOCX</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Copy to Clipboard Script -->
+    <script>
+        document.getElementById('copyText').addEventListener('click', function() {
+            var text = document.querySelector('pre').innerText;
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Text copied to clipboard!');
+        });
+    </script>
+</body>
+</html>

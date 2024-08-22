@@ -55,7 +55,7 @@ image_to_text_converter/
 1. Clone the repository:
 
     ```bash
-    git clone 
+    git clone https://github.com/bhumikap1/physics-walla-intern.git
     cd image-to-text-converter
     ```
 
